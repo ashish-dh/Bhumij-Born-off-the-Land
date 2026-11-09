@@ -1,193 +1,90 @@
-body {
-  font-family: 'Inter', sans-serif;
-}
-.font-heading {
-  font-family: 'Cinzel', serif;
-}
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-/* Subtle overlay pattern to sharpen low-res videos on large monitors */
-.video-overlay-pattern {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.4) 1px, transparent 0);
-  background-size: 4px 4px;
-}
-
-
-  <!-- Video Element pointing directly to banner.mp4 -->
-  <video id="heroVideo" autoplay loop muted playsinline class="w-full h-full object-cover filter contrast-[1.05] brightness-[0.9]">
-    <source src="banner.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
-  <!-- Video Quality Enhancement Overlay -->
-  <div class="absolute inset-0 video-overlay-pattern pointer-events-none"></div>
-  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60 pointer-events-none"></div>
-
-  <!-- Video Attribution Overlay -->
-  <div class="absolute top-4 left-4 z-10 bg-black/70 backdrop-blur-md text-slate-200 text-xs px-3.5 py-1.5 rounded-full border border-amber-500/20 flex items-center gap-2 shadow-lg">
-    <i class="fa-brands fa-instagram text-amber-400"></i>
-    <span>Video Source: <a id="videoSourceLink" href="https://www.instagram.com/reel/DWJoaIlzSuq/" target="_blank" class="text-amber-300 hover:underline font-medium">@naresh.singh01</a></span>
-  </div>
-
-  <!-- Video Controls Overlay -->
-  <div id="videoControls" class="absolute bottom-4 right-4 z-10 flex gap-2">
-    <label for="videoInput" title="Change Video" class="cursor-pointer bg-slate-900/80 hover:bg-slate-800 backdrop-blur-md border border-slate-700 text-white p-2.5 rounded-full shadow-lg transition">
-      <i class="fa-solid fa-arrow-up-from-bracket"></i>
-    </label>
-    <button id="removeVideoBtn" title="Remove Video" class="bg-red-950/80 hover:bg-red-900 backdrop-blur-md border border-red-700 text-red-200 p-2.5 rounded-full shadow-lg transition">
-      <i class="fa-solid fa-trash-can"></i>
-    </button>
-  </div>
-
-  <!-- Hidden Input -->
-  <input type="file" id="videoInput" accept="video/*" class="hidden">
-</div>
-
-<!-- Below Video Statistics Section -->
-<div class="bg-amber-950/90 border-t border-amber-800/60 py-6 px-4">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-    
-    <!-- Population -->
-    <div class="bg-amber-900/40 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
-      <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-users"></i> Current Population
-      </div>
-      <div class="text-2xl sm:text-3xl font-extrabold text-white">~900,000+</div>
-      <div class="text-xs text-amber-200/70 mt-1">Estimated across eastern Indian states</div>
-    </div>
-
-    <!-- Places Found -->
-    <div class="bg-amber-900/40 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
-      <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-map-location-dot"></i> Places They Are Found
-      </div>
-      <div class="text-base sm:text-lg font-bold text-white leading-snug">Jharkhand, West Bengal, Odisha, Assam</div>
-      <div class="text-xs text-amber-200/70 mt-1">Chota Nagpur Plateau, Singhbhum, Mayurbhanj</div>
-    </div>
-
-    <!-- Status / Reservation -->
-    <div class="bg-amber-900/40 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
-      <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-shield-halved"></i> Status / Reservation
-      </div>
-      <div class="text-xl sm:text-2xl font-extrabold text-white">Scheduled Tribe (ST)</div>
-      <div class="text-xs text-amber-200/70 mt-1">Recognized under the Constitution of India</div>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- Title & Controls -->
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-  <div>
-    <h2 class="text-2xl font-bold text-amber-100 font-heading tracking-wide">Bhumij Archive Directory</h2>
-    <p class="text-sm text-slate-400">Exact records sourced from the Bhumij web dataset</p>
-  </div>
-
-  <!-- Search Input -->
-  <div class="relative max-w-xs w-full">
-    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
-    <input type="text" id="searchInput" placeholder="Search records..." class="w-full pl-10 pr-4 py-2 border border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-slate-950 text-slate-200 placeholder-slate-500 shadow-sm">
-  </div>
-</div>
-
-<!-- 3-Column Grid View -->
-<div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  <!-- Grid items dynamically rendered -->
-</div>
-
-<!-- Empty Search State -->
-<div id="emptyState" class="hidden text-center py-16">
-  <i class="fa-solid fa-folder-open text-4xl text-slate-600 mb-3"></i>
-  <h3 class="text-lg font-medium text-slate-300">No matching records found</h3>
-  <p class="text-sm text-slate-500 mt-1">Try adjusting your search terms.</p>
-</div>
-
-
-  <!-- Modal Header -->
-  <div class="p-6 border-b border-slate-800 flex justify-between items-start bg-slate-950/60">
-    <div>
-      <span id="modalType" class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-950 text-amber-300 border border-amber-700/50 mb-2">Type</span>
-      <h3 id="modalTitle" class="text-xl font-bold text-amber-100 font-heading">Title</h3>
-    </div>
-    <button id="closeModalBtn" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition">
-      <i class="fa-solid fa-xmark text-xl"></i>
-    </button>
-  </div>
-
-  <!-- Modal Body -->
-  <div class="p-6 overflow-y-auto space-y-5">
-    
-    <!-- Modal Image -->
-    <div id="modalImageContainer" class="hidden rounded-xl overflow-hidden bg-black max-h-72 flex justify-center border border-slate-800">
-      <img id="modalImage" src="" alt="Record Image" class="object-contain max-h-72 w-full">
-    </div>
-
-    <div class="space-y-4">
-      <div>
-        <h4 class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Subject</h4>
-        <p id="modalSubject" class="text-sm font-medium text-slate-200 mt-1">Subject details...</p>
-      </div>
-
-      <div>
-        <h4 class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Description</h4>
-        <p id="modalDescription" class="text-sm text-slate-300 mt-1 leading-relaxed">Description text...</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-800/80">
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Source</h4>
-          <p id="modalSource" class="text-xs text-slate-300 mt-1">Source info</p>
+<!-- ... existing code ... -->
+  <!-- Header / Navigation -->
+  <header class="bg-slate-950/90 backdrop-blur-md border-b border-amber-900/40 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-bold shadow-md shadow-amber-500/20">
+          <i class="fa-solid fa-landmark text-lg"></i>
         </div>
         <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Language</h4>
-          <p id="modalLanguage" class="text-xs text-slate-300 mt-1">Language info</p>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Relation</h4>
-          <p id="modalRelation" class="text-xs text-slate-300 mt-1">Relation info</p>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Coverage</h4>
-          <p id="modalCoverage" class="text-xs text-slate-300 mt-1">Coverage info</p>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Creator</h4>
-          <p id="modalCreator" class="text-xs text-slate-300 mt-1">Creator info</p>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Contributor</h4>
-          <p id="modalContributor" class="text-xs text-slate-300 mt-1">Contributor info</p>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Publisher</h4>
-          <p id="modalPublisher" class="text-xs text-slate-300 mt-1">Publisher info</p>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Rights</h4>
-          <p id="modalRights" class="text-xs text-slate-300 mt-1">Rights info</p>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Format</h4>
-          <p id="modalFormat" class="text-xs text-slate-300 mt-1">Format info</p>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Identifier</h4>
-          <p id="modalIdentifier" class="text-xs text-slate-300 mt-1 break-all">Identifier info</p>
+          <h1 class="text-lg font-bold tracking-wide text-amber-100 font-heading">BHUMIJ HERITAGE</h1>
+          <p class="text-[10px] text-amber-400/80 uppercase tracking-wider font-semibold -mt-1">Cultural & Historical Preservation Archive</p>
         </div>
       </div>
+      <div class="text-xs text-amber-200/60 hidden sm:block bg-amber-950/50 px-3 py-1 rounded-full border border-amber-800/40">
+        <i class="fa-solid fa-database text-amber-400 mr-1.5"></i> Complete Dataset Directory
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner & Video Section (Portrait Album Frame) -->
+  <section class="relative bg-slate-950 border-b border-amber-900/40 py-8 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col items-center">
+      
+      <!-- Portrait Video Container (Prevents Low-Res Stretching) -->
+      <div class="relative w-full max-w-sm aspect-[9/16] max-h-[550px] rounded-2xl overflow-hidden bg-slate-900 border-2 border-amber-800/60 shadow-2xl shadow-amber-950/50 flex items-center justify-center">
+        
+        <!-- Video Element (Contain Fit for Crisp Resolution) -->
+        <video id="heroVideo" autoplay loop muted playsinline class="w-full h-full object-cover">
+          <source src="banner.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <!-- Video Source Handle Overlay -->
+        <div class="absolute top-4 left-4 z-10 bg-black/80 backdrop-blur-md text-slate-200 text-xs px-3.5 py-1.5 rounded-full border border-amber-500/30 flex items-center gap-2 shadow-lg">
+          <i class="fa-brands fa-instagram text-amber-400"></i>
+          <span>Video Source: <a id="videoSourceLink" href="https://www.instagram.com/reel/DWJoaIlzSuq/" target="_blank" class="text-amber-300 hover:underline font-medium">@naresh.singh01</a></span>
+        </div>
+
+        <!-- Custom Upload Controls -->
+        <div id="videoControls" class="absolute bottom-4 right-4 z-10 flex gap-2">
+          <label for="videoInput" title="Change Video" class="cursor-pointer bg-slate-900/90 hover:bg-slate-800 backdrop-blur-md border border-slate-700 text-white p-2.5 rounded-full shadow-lg transition">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+          </label>
+          <button id="removeVideoBtn" title="Remove Video" class="bg-red-950/90 hover:bg-red-900 backdrop-blur-md border border-red-700 text-red-200 p-2.5 rounded-full shadow-lg transition">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+
+        <input type="file" id="videoInput" accept="video/*" class="hidden">
+      </div>
+
     </div>
 
-  </div>
-</div>
+    <!-- Below Video Statistics Section -->
+    <div class="mt-8 border-t border-amber-800/40 pt-6">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        
+        <!-- Population -->
+        <div class="bg-amber-900/30 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
+          <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-users"></i> Current Population
+          </div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-white">~900,000+</div>
+          <div class="text-xs text-amber-200/70 mt-1">Estimated across eastern Indian states</div>
+        </div>
+
+        <!-- Places Found -->
+        <div class="bg-amber-900/30 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
+          <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-map-location-dot"></i> Places They Are Found
+          </div>
+          <div class="text-base sm:text-lg font-bold text-white leading-snug">Jharkhand, West Bengal, Odisha, Assam</div>
+          <div class="text-xs text-amber-200/70 mt-1">Chota Nagpur Plateau, Singhbhum, Mayurbhanj</div>
+        </div>
+
+        <!-- Status / Reservation -->
+        <div class="bg-amber-900/30 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
+          <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-halved"></i> Status / Reservation
+          </div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white">Scheduled Tribe (ST)</div>
+          <div class="text-xs text-amber-200/70 mt-1">Recognized under the Constitution of India</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Dataset Content Container -->
+<!-- ... existing code ... -->
