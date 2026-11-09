@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhumij Cultural & Historical Dataset</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-amber-900 text-amber-50 shadow-md border-b border-amber-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid me-2 fa-monument text-amber-400 text-2xl"></i>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Bhumij Heritage Portal</h1>
+      </div>
+      <span class="text-xs bg-amber-800 text-amber-200 px-3 py-1 rounded-full font-mono border border-amber-700">Digital Archive</span>
+    </div>
+  </header>
+
+  <!-- Hero & Video Section -->
+  <section class="relative bg-slate-900 text-white overflow-hidden shadow-inner">
+    <!-- Background / Uploaded Video -->
+    <div id="videoContainer" class="relative w-full h-[420px] sm:h-[500px] bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
+      
+      <!-- Video Element pointing directly to banner.mp4 in repository -->
+      <video id="heroVideo" autoplay loop muted playsinline class="w-full h-full object-cover">
+        <source src="banner.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- Video Attribution Overlay -->
+      <div class="absolute top-4 left-4 z-10 bg-black/50 backdrop-blur-md text-slate-200 text-xs px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-2">
+        <i class="fa-brands fa-instagram text-amber-400"></i>
+        <span>Video Source: Instagram Community Archive</span>
+      </div>
+
+      <!-- Fallback Upload Overlay for custom video preview -->
+      <div id="videoPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-slate-950/80 backdrop-blur-sm hidden">
+        <div class="w-20 h-20 rounded-full bg-amber-600/20 text-amber-400 flex items-center justify-center mb-4 border border-amber-500/30">
+          <i class="fa-solid fa-file-video text-3xl"></i>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-semibold text-amber-100 mb-2">Upload Custom Video</h2>
+        <p class="text-slate-400 max-w-md text-sm mb-6">Upload a local video file to test custom banner videos.</p>
+        <label for="videoInput" class="cursor-pointer bg-amber-600 hover:bg-amber-500 text-white font-medium px-5 py-2.5 rounded-lg shadow-lg hover:shadow-amber-600/20 transition duration-200 flex items-center space-x-2 border border-amber-400/30">
+          <i class="fa-solid fa-upload"></i>
+          <span>Select Video</span>
+        </label>
+      </div>
+
+      <!-- Controls Overlay -->
+      <div id="videoControls" class="absolute bottom-4 right-4 z-10 flex gap-2">
+        <label for="videoInput" title="Change Video" class="cursor-pointer bg-slate-900/80 hover:bg-slate-800 backdrop-blur-md border border-slate-700 text-white p-2.5 rounded-full shadow-lg transition">
+          <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        </label>
+        <button id="removeVideoBtn" title="Remove Video" class="bg-red-950/80 hover:bg-red-900 backdrop-blur-md border border-red-700 text-red-200 p-2.5 rounded-full shadow-lg transition">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+
+      <!-- Hidden Input -->
+      <input type="file" id="videoInput" accept="video/*" class="hidden">
+    </div>
+
+    <!-- Below Video Statistics Section -->
+    <div class="bg-amber-950/90 border-t border-amber-800/60 py-6 px-4">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        
+        <!-- Population -->
+        <div class="bg-amber-900/40 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
+          <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-users"></i> Current Population
+          </div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-white">~900,000+</div>
+          <div class="text-xs text-amber-200/70 mt-1">Estimated across eastern Indian states</div>
+        </div>
+
+        <!-- Places Found -->
+        <div class="bg-amber-900/40 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
+          <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-map-location-dot"></i> Places They Are Found
+          </div>
+          <div class="text-base sm:text-lg font-bold text-white leading-snug">Jharkhand, West Bengal, Odisha, Assam</div>
+          <div class="text-xs text-amber-200/70 mt-1">Chota Nagpur Plateau, Singhbhum, Mayurbhanj</div>
+        </div>
+
+        <!-- Status / Reservation -->
+        <div class="bg-amber-900/40 border border-amber-700/40 p-4 rounded-xl shadow-sm backdrop-blur-sm">
+          <div class="text-amber-400 text-sm font-semibold tracking-wider uppercase mb-1 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-halved"></i> Status / Reservation
+          </div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white">Scheduled Tribe (ST)</div>
+          <div class="text-xs text-amber-200/70 mt-1">Recognized under the Constitution of India</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Grid -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    
+    <!-- Title & Controls -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900">Bhumij Archive Directory</h2>
+        <p class="text-sm text-slate-500">Exhaustive records sourced from the Bhumij web dataset</p>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative max-w-xs w-full">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+        <input type="text" id="searchInput" placeholder="Search entries..." class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent bg-white shadow-sm">
+      </div>
+    </div>
+
+    <!-- 3-Column Grid View -->
+    <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Grid items dynamically rendered -->
+    </div>
+
+  </main>
+
+  <!-- Detail Modal -->
+  <div id="detailModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200">
+      <div class="sticky top-0 bg-slate-900 text-white p-5 flex justify-between items-start border-b border-slate-800">
+        <div>
+          <span id="modalType" class="text-xs font-semibold uppercase tracking-wider text-amber-400">Type</span>
+          <h3 id="modalTitle" class="text-xl font-bold mt-1 text-white">Title</h3>
+        </div>
+        <button id="closeModal" class="text-slate-400 hover:text-white p-1 rounded-lg text-xl">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <!-- Image display if available -->
+        <div id="modalImageContainer" class="hidden rounded-xl overflow-hidden bg-slate-100 max-h-64 flex justify-center border border-slate-200">
+          <img id="modalImage" src="" alt="Record Image" class="object-contain max-h-64 w-full">
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Subject</h4>
+            <p id="modalSubject" class="text-sm font-medium text-slate-800 mt-0.5">Subject details...</p>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Description</h4>
+            <p id="modalDescription" class="text-sm text-slate-700 mt-0.5 leading-relaxed">Description text...</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-100">
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Source</h4>
+              <p id="modalSource" class="text-xs text-slate-700 mt-0.5">Source info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Language</h4>
+              <p id="modalLanguage" class="text-xs text-slate-700 mt-0.5">Language info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Relation</h4>
+              <p id="modalRelation" class="text-xs text-slate-700 mt-0.5">Relation info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Coverage</h4>
+              <p id="modalCoverage" class="text-xs text-slate-700 mt-0.5">Coverage info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Creator</h4>
+              <p id="modalCreator" class="text-xs text-slate-700 mt-0.5">Creator info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Contributor</h4>
+              <p id="modalContributor" class="text-xs text-slate-700 mt-0.5">Contributor info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Publisher</h4>
+              <p id="modalPublisher" class="text-xs text-slate-700 mt-0.5">Publisher info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Rights</h4>
+              <p id="modalRights" class="text-xs text-slate-700 mt-0.5">Rights info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Format</h4>
+              <p id="modalFormat" class="text-xs text-slate-700 mt-0.5">Format info</p>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Identifier</h4>
+              <p id="modalIdentifier" class="text-xs text-slate-700 mt-0.5 break-all">Identifier info</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 text-xs py-6 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p>© Bhumij Web Dataset Archive. All spreadsheet records preserved strictly without modifications.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript Code -->
+  <script>
+    // Exact Spreadsheet Data as JSON Array
+    const sheetData = [
+      {
+        "Title": "Goram-Gohram/ Singbonga Deity",
+        "Subject": "Religion, Cosmology, Sun Deity, Nature Worship",
+        "Description": "Supreme creator deity in Bhumij spiritual cosmology, representing the Sun, purity, and life-giving energy. Sacred offerings are made to seek village protection and rain",
+        "Source": "Tribal Life in India, Ministry of Information and Broadcasting",
+        "Language": "unr/ English",
+        "Relation": "Relates to Jaher Than and Laya System",
+        "Coverage": "Chota Nagpur Plateau, Jharkhand,India",
+        "Creator": "Bhumij Tribal Community",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Anthropological Survey of India",
+        "Rights": "Open Access / Public Domain",
+        "Type": "Sacred Cosmology",
+        "Format": "text/ html",
+        "Identifier": "Singbonga (सिङ्गबोंगा) · Tribal Deity · LagnaGuru Library of Gods",
+        "Image1": "",
+        "Image2": "",
+        "ImageSource": ""
+      },
+      {
+        "Title": "Kili / Gotra System",
+        "Subject": "Social Structure, Exogamous, Clans, Totemism, KInship",
+        "Description": "The totemic social organization of the Bhumij tribe divided into exogamous clans (Kili/Gotras) named after flora and fauna like Sal tree (Tula), Turtle (Kachhap), and Serpent (Nag).",
+        "Source": "The Tribes and Castes of Bengal, Risley H.H.",
+        "Language": "UNR/ English",
+        "Relation": "Related to Bhumij Ancestral Lineage",
+        "Coverage": "East Singhbhum , Jharkhand, India",
+        "Creator": "Ancestral Lineage Elders",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Tribal Research Institute Jharkhand",
+        "Rights": "Creative Commons Attribution-ShareAlike",
+        "Type": "Social Structure",
+        "Format": "text/ html",
+        "Identifier": "Bhumij people explained",
+        "Image1": "",
+        "Image2": "",
+        "ImageSource": ""
+      },
+      {
+        "Title": "Bhumij Language(Latar/Tar Munda)",
+        "Subject": "Linguistucs, Austroasiatic, Munda, Languages, Oral Tradition",
+        "Description": "An Austroasiatic language belonging to the Munda sub-family spoken by the Bhumij people in Jharkhand, West Bengal, and Odisha. Primarily preserved through oral folktales",
+        "Source": "Linguistic Survey of India, Vol IV (Munda and Dravidian Languages)",
+        "Language": "UNR/ English",
+        "Relation": "Relates to Ol Onol Script",
+        "Coverage": "Jharkhand,Westbengal,Odisha,India",
+        "Creator": "Bhumij Speakers",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Linguistic Survey of India",
+        "Rights": "Open Access / Public Domain",
+        "Type": "Sound / Text",
+        "Format": "text/ html",
+        "Identifier": "Bhumij language — Grokipedia",
+        "Image1": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhScqTukOiRv9lodV8s37Q7kVSSHqymuKwGqujJ3K9A6nbMaJy2LTI0afxzvIy9I1PvMIFNtR5WUd9wMfrwP-3vMN8PJJYwEn_w4rQiNf2uxYZFv450iZQM81ET6ePpM6b-M_D4gyNWFy_ypKbO2RVqEodSqXbgPUSs5lKoth48QJpmMooCE69LzdJKtjvM/s738/1000127272.jpg",
+        "Image2": "",
+        "ImageSource": "Google User Content / Blog"
+      },
+      {
+        "Title": "Ol Onol Script",
+        "Subject": "Writing System, Script Revival, Indigeneoys Literacy",
+        "Description": "The writing script created specifically for writing the Bhumij language to preserve oral literature, folklore, and educational materials from extinction",
+        "Source": "Indigenous Literacy and Script Movements in Eastern India",
+        "Language": "UNR/ English",
+        "Relation": "Relates to Bhumij Language",
+        "Coverage": "Seraikela Kharsawan,Jharkhand",
+        "Creator": "Mahendra Nath Sardar",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Bhumij Bhasha Sahitya Parishad",
+        "Rights": "Open Access / Educational",
+        "Type": "Interactive Resource",
+        "Format": "text/ html",
+        "Identifier": "Ol Onol - Wikiwand",
+        "Image1": "https://www.scstrti.in/images/phocagallery/tribes/Bhumij/thumbs/phoca_thumb_l_6.jpg",
+        "Image2": "",
+        "ImageSource": "SCSTRTI Odisha"
+      },
+      {
+        "Title": "Jaher Than",
+        "Subject": "Scared Grove, Forest Ecology, Biodiversity, Nature Temple",
+        "Description": "Sacred virgin forest groves maintained at the border of Bhumij villages. Cutting trees or harming animals in Jaher Than is strictly prohibited, preserving indigenous biodiversity",
+        "Source": "Sacred Groves and Ethno-Forestry practices among Munda and Bhumij Tribes",
+        "Language": "UNR/ English",
+        "Relation": "Relates to Singbonga Deity and Laya Priest System",
+        "Coverage": "Mayurbhanj & Singhbhum Forest Belt, India",
+        "Creator": "Village Elders & Layas",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Environmental & Cultural Heritage Society",
+        "Rights": "Public Domain/ Open research",
+        "Type": "Physical Object/ Ecosystem",
+        "Format": "text/ html",
+        "Identifier": "Jaherthan - Wikipedia",
+        "Image1": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/%E1%B1%A1%E1%B1%9F%E1%B1%B7%E1%B1%AE%E1%B1%A8_%E1%B1%9B%E1%B1%B7%E1%B1%9F%E1%B1%B1.jpg/500px-%E1%B1%A1%E1%B1%9F%E1%B1%B7%E1%B1%AE%E1%B1%A8_%E1%B1%9B%E1%B1%B7%E1%B1%9F%E1%B1%B1.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
+        "Image2": "",
+        "ImageSource": "Wikimedia Commons"
+      },
+      {
+        "Title": "Laya (Traditional Village Priest)",
+        "Subject": "Traditional Governance, Sacred Rituals, Spiritual Priest",
+        "Description": "The traditional village priest responsible for conducting sacred rituals at Jaher Than, leading seasonal festivals, and maintaining harmony between villagers and nature spirits",
+        "Source": "Customary Laws and Governance of Chota Nagpur Tribes",
+        "Language": "UNR/ English",
+        "Relation": "Relates to Jaher Than and Sarhul Festival",
+        "Coverage": "Purulia & Singhbhum Region, India",
+        "Creator": "Hereditary Village Priests",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Council Of Tribal Culture",
+        "Rights": "All Rights Reserved (Editorial Use Only)",
+        "Type": "Oral tradition",
+        "Format": "text/ html",
+        "Identifier": "Bhumij people - Wikiwand",
+        "Image1": "https://c7.alamy.com/comp/2PGYW97/potka-east-singhbhum-india-24th-mar-2023-the-sarhul-festival-organized-by-the-national-bhumij-sarhul-festival-organizing-committee-celebrated-at-harina-village-potka-block-of-east-singhbhum-district-bhumij-community-from-jharkhand-as-well-as-west-bengal-odisha-and-assam-tribal-communities-joined-the-festival-today-sarhul-is-a-spring-festival-the-festival-of-the-new-year-in-india-celebrated-by-tribal-communities-credit-image-rohit-shawpacific-press-via-zuma-press-wire-editorial-usage-only!-not-for-commercial-usage!-2PGYW97.jpg",
+        "Image2": "",
+        "ImageSource": "Alamy"
+      },
+      {
+        "Title": "Sarhul Festival",
+        "Subject": "Spring Blossom, Flower Festival, Agriculture Cycle",
+        "Description": "Major spring festival celebrating the flowering of Sal trees. Villagers offer Sal blossoms to deities and ancestors at Jaher Than before starting agricultural activity",
+        "Source": "Festival Traditions of Tribal Jharkhand",
+        "Language": "UNR/ English",
+        "Relation": "Relates to Karam Festival and Jaher Than",
+        "Coverage": "Chota Nagpur Region,  Jharkhand",
+        "Creator": "Community Folk Groups",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Department of Culture, Govt. of Jharkhand",
+        "Rights": "Public Domain",
+        "Type": "Event/Festival",
+        "Format": "text/ html",
+        "Identifier": "Bhumij people — Grokipedia",
+        "Image1": "https://i0.wp.com/avenuemail.in/wp-content/uploads/2025/04/DSC_7386-1.jpg?resize=1024%2C683&ssl=1",
+        "Image2": "",
+        "ImageSource": "Avenue Mail"
+      },
+      {
+        "Title": "Karam Festival",
+        "Subject": "Autumn Harvest, Karam Tree, Worship, Fertility Ritual",
+        "Description": "Autumn harvest festival centered on worshipping the branch of the Karam tree (Nauclea parvifolia). Youth dance overnight to celebrate agricultural growth, prosperity, and sisterhood",
+        "Source": "Ethnobotanical Sacred Trees of Eastern India",
+        "Language": "UNR/ English",
+        "Relation": "Relates to Sarhul Festival",
+        "Coverage": "Ranchi, Purlia and Singhbhum Districts",
+        "Creator": "Youth & Village Elders",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Folk cultural Academy of India",
+        "Rights": "Public Domain",
+        "Type": "Event/Festival",
+        "Format": "text/ html",
+        "Identifier": "Karam (festival) - Wikipedia",
+        "Image1": "https://tribaldarshan.com/wp-content/uploads/2024/09/PhotoCollageMaker_202491482136761-1536x1536.jpg",
+        "Image2": "https://tribaldarshan.com/wp-content/uploads/2024/09/PTI09_25_2023_000235B-1301586945.jpg",
+        "ImageSource": "Tribal Darshan"
+      },
+      {
+        "Title": "Sohrai Festival",
+        "Subject": "Wall Art, Post-Harvest Celebration",
+        "Description": "Post-harvest winter festival honoring farm animals. Homes are painted with natural mud pigments and cattle are bathed, anointed with oils, and decorated with garlands",
+        "Source": "Indigenous Folk Paintings and Cattle Festivals of Jharkhand",
+        "Language": "UNR/ English",
+        "Relation": "Relates to Karam Festival",
+        "Coverage": "East Singhbhum , Jharkhand & West Bengal",
+        "Creator": "Bhumij Farmers",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Tribal Art Documentation Centre",
+        "Rights": "Open Access",
+        "Type": "Event / Art",
+        "Format": "text/ html",
+        "Identifier": "Sohrai in Jharkhand — Jharkhand, India | Tripnana",
+        "Image1": "https://wpmedia.prabhatkhabar.com/uploads/2026/11/02/1793627536437/sizes/02gha_33_02112026_44-16dc03-hero.webp",
+        "Image2": "",
+        "ImageSource": "Prabhat Khabar"
+      },
+      {
+        "Title": "Bandna Festival",
+        "Subject": "Cattle Worship, Post Harvest Celebration",
+        "Description": "Bandna is a traditional harvest-season festival celebrated by agrarian communities—especially Santhal, Kurmi, Mahato, and other farming groups. It centers on the belief that cattle and agricultural tools are essential partners in human survival, and thus deserve respect and ritual care.",
+        "Source": "",
+        "Language": "English",
+        "Relation": "Relates to festival",
+        "Coverage": "East Singhbhum , Jharkhand & West Bengal",
+        "Creator": "Bhumij People",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Jharkhand Government",
+        "Rights": "Public Domain",
+        "Type": "Event/Festival",
+        "Format": "text/ html",
+        "Identifier": "Bandna | Chief Minister of Jharkhand | Government of Jharkhand, Ranchi",
+        "Image1": "https://cm.jharkhand.gov.in/sites/default/files/Tour-2024-08/bandana.jpg",
+        "Image2": "",
+        "ImageSource": "Jharkhand Government Portal"
+      },
+      {
+        "Title": "Dishua Hadi Bonga",
+        "Subject": "Nature Worship",
+        "Description": "Hadi Bonga is associated with nature worship, ancestral reverence, and community celebration. It is closely tied to Sarhul, the spring festival that honors Jaher Era, the deity of forests and nature.",
+        "Source": "",
+        "Language": "English",
+        "Relation": "Relates to Sarhul and Jaher Than",
+        "Coverage": "East Singhbhum , Jharkhand & West Bengal",
+        "Creator": "Bhumij People",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "",
+        "Rights": "All Rights Reserved (Editorial Use Only)",
+        "Type": "Event/Festival",
+        "Format": "text/ html",
+        "Identifier": "Dishua Hadi Bonga — Sarhul Spring Festival",
+        "Image1": "https://www.alamy.com/potka-india-24th-mar-2023-the-sarhul-festival-organized-by-the-national-bhumij-sarhul-festival-organizing-committee-celebrated-at-harina-village-potka-block-of-east-singhbhum-district-bhumij-community-from-jharkhand-as-well-as-west-bengal-odisha-and-assam-tribal-communities-joined-the-festival-today-sarhul-is-a-spring-festival-the-festival-of-the-new-year-in-india-celebrated-by-tribal-communities-photo-by-rohit-shawpacific-press-credit-pacific-press-media-production-corpalamy-live-news-image543967819.html",
+        "Image2": "https://c7.alamy.com/comp/2PGYYCA/potka-east-singhbhum-india-24th-mar-2023-the-sarhul-festival-organized-by-the-national-bhumij-sarhul-festival-organizing-committee-celebrated-at-harina-village-potka-block-of-east-singhbhum-district-bhumij-community-from-jharkhand-as-well-as-west-bengal-odisha-and-assam-tribal-communities-joined-the-festival-today-sarhul-is-a-spring-festival-the-festival-of-the-new-year-in-india-celebrated-by-tribal-communities-credit-image-rohit-shawpacific-press-via-zuma-press-wire-editorial-usage-only!-not-for-commercial-usage!-2PGYYCA.jpg",
+        "ImageSource": "Alamy"
+      },
+      {
+        "Title": "Ganga Narayan Singh & Chuar Rebellion(1832)",
+        "Subject": "Freedom Movement, Chuar Rebellion, Tribal Resistance",
+        "Description": "Historical 1832 armed uprising led by Bhumij leader Ganga Narayan Singh against oppressive British land revenues and colonial expansion in Dhalbhum and Manbhum",
+        "Source": "The Chuar Rebellion and Bhumij Revolt of 1832-33, J.C. Jha",
+        "Language": "UNR/ English",
+        "Relation": "Relates to Bhumij Ancestral History",
+        "Coverage": "Manbhum,Dhalbhum,JUngle Mahals,India",
+        "Creator": "Ganga Narayan Singh",
+        "Contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "Publisher": "Indian Council of Historical Research",
+        "Rights": "Public Domain",
+        "Type": "Historical Event",
+        "Format": "text/ html",
+        "Identifier": "Chuar Rebellion - Wikiwand",
+        "Image1": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/The_statue_of_Ganga_Narayan_Singh%2C_the_legendary_leader_of_the_Bhumij_Revolt_against_the_British_East_India_Company%2C_situated_at_Belpahari_03.jpg/960px-The_statue_of_Ganga_Narayan_Singh%2C_the_legendary_leader_of_the_Bhumij_Revolt_against_the_British_East_India_Company%2C_situated_at_Belpahari_03.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "Image2": "",
+        "ImageSource": "Wikimedia Commons"
+      }
+    ];
+
+    // IndexedDB setup to store uploaded video persistently
+    const DB_NAME = 'BhumijWebDB';
+    const STORE_NAME = 'videoStore';
+
+    function initDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME);
+          }
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function saveVideoToDB(file) {
+      const db = await initDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.put(file, 'userVideo');
+        req.onsuccess = () => resolve();
+        req.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function getSavedVideoFromDB() {
+      const db = await initDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.get('userVideo');
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function deleteVideoFromDB() {
+      const db = await initDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.delete('userVideo');
+        req.onsuccess = () => resolve();
+        req.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    // Video Handler Logic
+    const videoInput = document.getElementById('videoInput');
+    const heroVideo = document.getElementById('heroVideo');
+    const videoPlaceholder = document.getElementById('videoPlaceholder');
+    const videoControls = document.getElementById('videoControls');
+    const removeVideoBtn = document.getElementById('removeVideoBtn');
+
+    async function loadSavedVideo() {
+      try {
+        const savedBlob = await getSavedVideoFromDB();
+        if (savedBlob) {
+          const videoURL = URL.createObjectURL(savedBlob);
+          heroVideo.src = videoURL;
+          heroVideo.classList.remove('hidden');
+          videoPlaceholder.classList.add('hidden');
+          videoControls.classList.remove('hidden');
+          heroVideo.play().catch(err => console.log("Autoplay prevented:", err));
+        }
+      } catch (err) {
+        console.error("Error loading video from storage:", err);
+      }
+    }
+
+    videoInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        try {
+          await saveVideoToDB(file);
+          const videoURL = URL.createObjectURL(file);
+          heroVideo.src = videoURL;
+          heroVideo.classList.remove('hidden');
+          videoPlaceholder.classList.add('hidden');
+          videoControls.classList.remove('hidden');
+          heroVideo.play().catch(err => console.log("Autoplay prevented:", err));
+        } catch (err) {
+          console.error("Failed to save video:", err);
+        }
+      }
+    });
+
+    removeVideoBtn.addEventListener('click', async () => {
+      await deleteVideoFromDB();
+      heroVideo.pause();
+      heroVideo.removeAttribute('src');
+      heroVideo.load();
+      heroVideo.classList.add('hidden');
+      videoPlaceholder.classList.remove('hidden');
+      videoControls.classList.add('hidden');
+      videoInput.value = '';
+    });
+
+    // Render 3-column Grid
+    const cardsGrid = document.getElementById('cardsGrid');
+
+    function renderCards(data) {
+      cardsGrid.innerHTML = '';
+      if (data.length === 0) {
+        cardsGrid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400">No records matching your search.</div>`;
+        return;
+      }
+
+      data.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-slate-200 flex flex-col overflow-hidden h-full cursor-pointer";
+        
+        // Image preview if present
+        let imageHtml = '';
+        if (item.Image1) {
+          imageHtml = `
+            <div class="h-44 bg-slate-100 relative overflow-hidden border-b border-slate-100">
+              <img src="${item.Image1}" alt="${item.Title}" class="w-full h-full object-cover" onerror="this.onerror=null; this.parentElement.style.display='none';">
+              <span class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-md text-white text-[10px] px-2 py-0.5 rounded">
+                ${item.ImageSource || 'Image'}
+              </span>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          ${imageHtml}
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                ${item.Type || 'Record'}
+              </span>
+              <span class="text-xs text-slate-400 font-mono">${item.Coverage ? item.Coverage.split(',')[0] : ''}</span>
+            </div>
+            
+            <h3 class="text-lg font-bold text-slate-900 mb-2 hover:text-amber-700 transition-colors line-clamp-1">
+              ${item.Title}
+            </h3>
+
+            <p class="text-xs font-medium text-amber-900/80 mb-3 line-clamp-1">
+              <i class="fa-solid fa-tag text-[10px] me-1"></i>${item.Subject}
+            </p>
+
+            <p class="text-sm text-slate-600 line-clamp-3 mb-4 flex-grow">
+              ${item.Description}
+            </p>
+
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span class="truncate max-w-[180px]"><i class="fa-regular fa-user me-1"></i>${item.Creator}</span>
+              <span class="text-amber-600 font-medium group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+              </span>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener('click', () => openModal(item));
+        cardsGrid.appendChild(card);
+      });
+    }
+
+    // Modal Operations
+    const detailModal = document.getElementById('detailModal');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    function openModal(item) {
+      document.getElementById('modalTitle').textContent = item.Title;
+      document.getElementById('modalType').textContent = item.Type || 'N/A';
+      document.getElementById('modalSubject').textContent = item.Subject || 'N/A';
+      document.getElementById('modalDescription').textContent = item.Description || 'N/A';
+      document.getElementById('modalSource').textContent = item.Source || 'N/A';
+      document.getElementById('modalLanguage').textContent = item.Language || 'N/A';
+      document.getElementById('modalRelation').textContent = item.Relation || 'N/A';
+      document.getElementById('modalCoverage').textContent = item.Coverage || 'N/A';
+      document.getElementById('modalCreator').textContent = item.Creator || 'N/A';
+      document.getElementById('modalContributor').textContent = item.Contributor || 'N/A';
+      document.getElementById('modalPublisher').textContent = item.Publisher || 'N/A';
+      document.getElementById('modalRights').textContent = item.Rights || 'N/A';
+      document.getElementById('modalFormat').textContent = item.Format || 'N/A';
+      document.getElementById('modalIdentifier').textContent = item.Identifier || 'N/A';
+
+      const imgContainer = document.getElementById('modalImageContainer');
+      const img = document.getElementById('modalImage');
+
+      if (item.Image1) {
+        img.src = item.Image1;
+        imgContainer.classList.remove('hidden');
+        img.onerror = () => imgContainer.classList.add('hidden');
+      } else {
+        imgContainer.classList.add('hidden');
+      }
+
+      detailModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    closeModalBtn.addEventListener('click', () => {
+      detailModal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    });
+
+    detailModal.addEventListener('click', (e) => {
+      if (e.target === detailModal) {
+        detailModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Search Filtering
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const filtered = sheetData.filter(item => 
+        item.Title.toLowerCase().includes(query) ||
+        item.Subject.toLowerCase().includes(query) ||
+        item.Description.toLowerCase().includes(query) ||
+        item.Coverage.toLowerCase().includes(query)
+      );
+      renderCards(filtered);
+    });
+
+    // Initialize Page
+    window.onload = function() {
+      loadSavedVideo();
+      renderCards(sheetData);
+    };
+  </script>
+</body>
+</html>
